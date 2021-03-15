@@ -42,6 +42,15 @@ echo phpmyadmin phpmyadmin/reconfigure-webserver multiselect none | debconf-set-
 echo "Updating packages list..."
 apt-get update
 
+
+echo "Installing php 7.2..."
+add-apt-repository ppa:ondrej/php
+apt-get update
+apt-get install php7.2 -y
+
+a2dismod php7.1
+a2enmod php7.2
+
 echo "Installing required packages..."
 apt-get install -y \
     build-essential \
@@ -54,22 +63,22 @@ apt-get install -y \
     nginx \
     nodejs \
     ntp \
-    php7.1-bcmath \
-    php7.1-cli \
-    php7.1-common \
-    php7.1-curl \
-    php7.1-fpm \
-    php7.1-dev \
-    php7.1-gd \
-    php7.1-imap \
-    php7.1-intl \
-    php7.1-mbstring \
-    php7.1-mcrypt \
-    php7.1-mysql \
-    php7.1-soap \
-    php7.1-xml \
-    php7.1-xmlrpc \
-    php7.1-zip \
+    php7.2-bcmath \
+    php7.2-cli \
+    php7.2-common \
+    php7.2-curl \
+    php7.2-fpm \
+    php7.2-dev \
+    php7.2-gd \
+    php7.2-imap \
+    php7.2-intl \
+    php7.2-mbstring \
+    php7.2-mcrypt \
+    php7.2-mysql \
+    php7.2-soap \
+    php7.2-xml \
+    php7.2-xmlrpc \
+    php7.2-zip \
     php-gettext \
     php-imagick \
     php-pear \
@@ -88,6 +97,7 @@ if [ ! -f /usr/local/bin/composer ]; then
     mv composer.phar /usr/local/bin/composer
     #FOR MAGENTO 2
     sudo composer self-update --1
+    sudo mkdir ~/.composer
     sudo chown vagrant.vagrant ~/.composer
 fi
 
@@ -100,16 +110,21 @@ fi
 # fi
 
 # Install mailhog
-echo "Installing mailhog..."
-wget --quiet -O ~/mailhog https://github.com/mailhog/MailHog/releases/download/v0.2.1/MailHog_linux_amd64
-chmod +x ~/mailhog
-mv ~/mailhog /usr/local/bin/mailhog
+if [ ! -f /usr/local/bin/mailhog ]; then
+    echo "Installing mailhog..."
+    wget --quiet -O ~/mailhog https://github.com/mailhog/MailHog/releases/download/v0.2.1/MailHog_linux_amd64
+    chmod +x ~/mailhog
+    mv ~/mailhog /usr/local/bin/mailhog
+fi
 
 # Install mhsendmail
-echo "Installing mhsendmail..."
-wget --quiet -O ~/mhsendmail https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64
-chmod +x ~/mhsendmail
-mv ~/mhsendmail /usr/local/bin/mhsendmail
+if [ ! -f /usr/local/bin/mhsendmail ]; then
+    echo "Installing mhsendmail..."
+    wget --quiet -O ~/mhsendmail https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64
+    chmod +x ~/mhsendmail
+    mv ~/mhsendmail /usr/local/bin/mhsendmail
+fi
+
 
 # Post installation cleanup
 echo "Cleaning up..."
@@ -154,13 +169,17 @@ GRANT ALL PRIVILEGES ON vagrant.* TO 'vagrant'@'localhost' IDENTIFIED BY 'passwo
 EOF
 
 # phpMyAdmin initial setup
-echo "Configuring phpMyAdmin..."
-cp /srv/config/phpmyadmin/config.inc.php /etc/phpmyadmin/config.inc.php
+if [ ! -f /etc/phpmyadmin/config.inc.php ]; then
+    echo "Configuring phpMyAdmin..."
+    cp /srv/config/phpmyadmin/config.inc.php /etc/phpmyadmin/config.inc.php
+fi
 
 # Mailhog initial setup
-echo "Configuring Mailhog..."
-cp /srv/config/mailhog/mailhog.service  /etc/systemd/system/mailhog.service
-systemctl enable mailhog
+if [ ! -f /etc/systemd/system/mailhog.service ]; then
+    echo "Configuring Mailhog..."
+    cp /srv/config/mailhog/mailhog.service  /etc/systemd/system/mailhog.service
+    systemctl enable mailhog
+fi
 
 # Swap
 echo "Setting up swap..."
@@ -177,14 +196,14 @@ sh -c "printf 'vm.vfs_cache_pressure=50\n' >> /etc/sysctl.conf"
 # Restart all the services
 echo "Restarting services..."
 service mysql restart
-service php7.1-fpm restart
+service php7.2-fpm restart
 service nginx restart
 service mailhog start
 
 # Add ubuntu user to the www-data group with correct owner
 echo "Adding user to the correct group..."
 usermod -a -G www-data ubuntu
-chown -R www-data:www-data /srv/www/
+sudo chown -R www-data:www-data /srv/www/
 
 # Calculate time taken and inform the user
 time_end="$(date +%s)"
