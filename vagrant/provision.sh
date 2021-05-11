@@ -8,6 +8,7 @@ time_start="$(date +%s)"
 # Get domain name passed from Vagrantfile
 vagrant_domain=$1
 
+
 # Add additional sources for packages
 echo "Updating package sources..."
 ln -sf /srv/config/apt-sources-extra.list /etc/apt/sources.list.d/apt-sources-extra.list
@@ -48,8 +49,8 @@ add-apt-repository ppa:ondrej/php
 apt-get update
 apt-get install php7.2 -y
 
-a2dismod php7.1
-a2enmod php7.2
+# a2dismod php7.1
+# a2enmod php7.2
 
 echo "Installing required packages..."
 apt-get install -y \
@@ -144,8 +145,8 @@ sed -i "s/VAGRANT_DOMAIN/$vagrant_domain/g" /etc/nginx/conf.d/db.conf
 echo "Configuring PHP..."
 phpenmod mcrypt
 phpenmod mbstring
-cp /srv/config/php/php-custom.ini /etc/php/7.1/fpm/conf.d/php-custom.ini
-sed -i "s/VAGRANT_DOMAIN/$vagrant_domain/g" /etc/php/7.1/fpm/conf.d/php-custom.ini
+cp /srv/config/php/php-custom.ini /etc/php/7.2/fpm/conf.d/php-custom.ini
+sed -i "s/VAGRANT_DOMAIN/$vagrant_domain/g" /etc/php/7.2/fpm/conf.d/php-custom.ini
 
 # Redis Setup
 echo "Configuring Redis..."
@@ -201,9 +202,9 @@ service nginx restart
 service mailhog start
 
 # Add ubuntu user to the www-data group with correct owner
-echo "Adding user to the correct group..."
-usermod -a -G www-data ubuntu
-sudo chown -R www-data:www-data /srv/www/
+# echo "Adding user to the correct group..."
+# usermod -a -G www-data ubuntu
+# sudo chown -R www-data:www-data /srv/www/
 
 # Calculate time taken and inform the user
 time_end="$(date +%s)"

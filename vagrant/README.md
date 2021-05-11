@@ -40,7 +40,7 @@ Additional MySQL access:
 
 * [Ubuntu 16.04](http://www.ubuntu.com/)
 * [nginx (mainline)](http://nginx.org/)
-* [php-fpm 7.1.x](http://php-fpm.org/)
+* [php-fpm 7.2.x](http://php-fpm.org/)
 * [MariaDB 10.1.x](https://mariadb.org/)
 * [phpMyAdmin](https://www.phpmyadmin.net/)
 * [Git](https://git-scm.com/)

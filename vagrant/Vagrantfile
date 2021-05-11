@@ -8,13 +8,13 @@
 Vagrant.configure(2) do |config|
 
   #SITE NAME
-  vagrant_sitename = "sitename"; 
+  vagrant_sitename = "ppm2"; 
 
   #DOMAIN
   vagrant_domain = "#{vagrant_sitename}.local"
 
   #IP
-  vagrant_ip = "192.168.32." + rand(256).to_s
+  vagrant_ip = "192.168.56.167"
 
   #PROJECT FOLDER
   project_folder = "../www"
