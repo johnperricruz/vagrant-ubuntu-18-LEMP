@@ -44,13 +44,10 @@ echo "Updating packages list..."
 apt-get update
 
 
-echo "Installing php 7.2..."
+echo "Installing php 7.4..."
 add-apt-repository ppa:ondrej/php
 apt-get update
-apt-get install php7.2 -y
-
-# a2dismod php7.1
-# a2enmod php7.2
+apt-get install php7.4 -y
 
 echo "Installing required packages..."
 apt-get install -y \
@@ -64,22 +61,22 @@ apt-get install -y \
     nginx \
     nodejs \
     ntp \
-    php7.2-bcmath \
-    php7.2-cli \
-    php7.2-common \
-    php7.2-curl \
-    php7.2-fpm \
-    php7.2-dev \
-    php7.2-gd \
-    php7.2-imap \
-    php7.2-intl \
-    php7.2-mbstring \
-    php7.2-mcrypt \
-    php7.2-mysql \
-    php7.2-soap \
-    php7.2-xml \
-    php7.2-xmlrpc \
-    php7.2-zip \
+    php7.4-bcmath \
+    php7.4-cli \
+    php7.4-common \
+    php7.4-curl \
+    php7.4-fpm \
+    php7.4-dev \
+    php7.4-gd \
+    php7.4-imap \
+    php7.4-intl \
+    php7.4-mbstring \
+    php7.4-mcrypt \
+    php7.4-mysql \
+    php7.4-soap \
+    php7.4-xml \
+    php7.4-xmlrpc \
+    php7.4-zip \
     php-gettext \
     php-imagick \
     php-pear \
@@ -145,8 +142,8 @@ sed -i "s/VAGRANT_DOMAIN/$vagrant_domain/g" /etc/nginx/conf.d/db.conf
 echo "Configuring PHP..."
 phpenmod mcrypt
 phpenmod mbstring
-cp /srv/config/php/php-custom.ini /etc/php/7.2/fpm/conf.d/php-custom.ini
-sed -i "s/VAGRANT_DOMAIN/$vagrant_domain/g" /etc/php/7.2/fpm/conf.d/php-custom.ini
+cp /srv/config/php/php-custom.ini /etc/php/7.4/fpm/conf.d/php-custom.ini
+sed -i "s/VAGRANT_DOMAIN/$vagrant_domain/g" /etc/php/7.4/fpm/conf.d/php-custom.ini
 
 # Redis Setup
 echo "Configuring Redis..."
@@ -197,7 +194,7 @@ sh -c "printf 'vm.vfs_cache_pressure=50\n' >> /etc/sysctl.conf"
 # Restart all the services
 echo "Restarting services..."
 service mysql restart
-service php7.2-fpm restart
+service php7.4-fpm restart
 service nginx restart
 service mailhog start
 
