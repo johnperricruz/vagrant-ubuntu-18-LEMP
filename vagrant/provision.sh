@@ -191,6 +191,17 @@ sysctl vm.vfs_cache_pressure=50
 sh -c "printf 'vm.swappiness=10\n' >> /etc/sysctl.conf"
 sh -c "printf 'vm.vfs_cache_pressure=50\n' >> /etc/sysctl.conf"
 
+#Install Elastic Search
+# sudo apt search openjdk
+# sudo apt-get install openjdk-8-jdk
+# wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+# sudo apt-get install apt-transport-https
+# echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-5.x.list
+# sudo apt-get update && sudo apt-get install elasticsearch
+# sudo /bin/systemctl daemon-reload
+# sudo /bin/systemctl enable elasticsearch.service
+# sudo systemctl start elasticsearch.service
+
 # Restart all the services
 echo "Restarting services..."
 service mysql restart
