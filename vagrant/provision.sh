@@ -204,10 +204,13 @@ sh -c "printf 'vm.vfs_cache_pressure=50\n' >> /etc/sysctl.conf"
 
 # Restart all the services
 echo "Restarting services..."
+sudo fuser -k 80/tcp
+sudo fuser -k 443/tcp
 service mysql restart
 service php7.4-fpm restart
 service nginx restart
 service mailhog start
+
 
 # Add ubuntu user to the www-data group with correct owner
 # echo "Adding user to the correct group..."
