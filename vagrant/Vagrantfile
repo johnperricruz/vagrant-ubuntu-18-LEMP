@@ -8,13 +8,13 @@
 Vagrant.configure(2) do |config|
 
   #SITE NAME
-  vagrant_sitename = "legends"; 
+  vagrant_sitename = "yourdomain"; 
 
   #DOMAIN
   vagrant_domain = "#{vagrant_sitename}.local"
 
   #IP
-  vagrant_ip = "192.168.56.168"
+  vagrant_ip = "192.168.56.169"
 
   #PROJECT FOLDER
   project_folder = "../www"
@@ -32,7 +32,7 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "bento/ubuntu-16.04"
+  config.vm.box = "bento/ubuntu-18.04"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
