@@ -99,14 +99,6 @@ if [ ! -f /usr/local/bin/composer ]; then
     sudo chown vagrant.vagrant ~/.composer
 fi
 
-# # Install WP-CLI
-# if [ ! -f /usr/local/bin/wp ]; then
-#     echo "Installing wp-cli..."
-#     curl -sS -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-#     chmod +x wp-cli.phar
-#     mv wp-cli.phar /usr/local/bin/wp
-# fi
-
 # Install mailhog
 if [ ! -f /usr/local/bin/mailhog ]; then
     echo "Installing mailhog..."
@@ -123,20 +115,9 @@ if [ ! -f /usr/local/bin/mhsendmail ]; then
     mv ~/mhsendmail /usr/local/bin/mhsendmail
 fi
 
-
 # Post installation cleanup
 echo "Cleaning up..."
 apt-get -y autoremove
-
-# nginx initial setup
-echo "Configuring nginx..."
-cp /srv/config/nginx/nginx.conf /etc/nginx/nginx.conf
-cp /srv/config/nginx/default.conf /etc/nginx/conf.d/default.conf
-cp /srv/config/nginx/mail.conf /etc/nginx/conf.d/mail.conf
-cp /srv/config/nginx/db.conf /etc/nginx/conf.d/db.conf
-sed -i "s/VAGRANT_DOMAIN/$vagrant_domain/g" /etc/nginx/conf.d/default.conf
-sed -i "s/VAGRANT_DOMAIN/$vagrant_domain/g" /etc/nginx/conf.d/mail.conf
-sed -i "s/VAGRANT_DOMAIN/$vagrant_domain/g" /etc/nginx/conf.d/db.conf
 
 # PHP initial setup
 echo "Configuring PHP..."
@@ -190,32 +171,6 @@ sysctl vm.swappiness=10
 sysctl vm.vfs_cache_pressure=50
 sh -c "printf 'vm.swappiness=10\n' >> /etc/sysctl.conf"
 sh -c "printf 'vm.vfs_cache_pressure=50\n' >> /etc/sysctl.conf"
-
-#Install Elastic Search
-# sudo apt search openjdk
-# sudo apt-get install openjdk-8-jdk
-# wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
-# sudo apt-get install apt-transport-https
-# echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-5.x.list
-# sudo apt-get update && sudo apt-get install elasticsearch
-# sudo /bin/systemctl daemon-reload
-# sudo /bin/systemctl enable elasticsearch.service
-# sudo systemctl start elasticsearch.service
-
-# Restart all the services
-echo "Restarting services..."
-sudo fuser -k 80/tcp
-sudo fuser -k 443/tcp
-service mysql restart
-service php7.4-fpm restart
-service nginx restart
-service mailhog start
-
-
-# Add ubuntu user to the www-data group with correct owner
-# echo "Adding user to the correct group..."
-# usermod -a -G www-data ubuntu
-# sudo chown -R www-data:www-data /srv/www/
 
 # Calculate time taken and inform the user
 time_end="$(date +%s)"
