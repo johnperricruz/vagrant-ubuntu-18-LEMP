@@ -16,8 +16,11 @@ $ vagrant plugin install vagrant-hostsupdater
 ```
 $ mkdir <project-name>
 $ cd <project-name>
-$ git clone https://github.com/johnperricruz/vagrant-ubuntu-16-LEMP.git
+$ git clone https://github.com/johnperricruz/vagrant-ubuntu-18-LEMP.git
 $ cd vagrant
+  Edit Vagrant file
+    * vagrant_sitename
+    * vagrant_ip
 $ vagrant up
 ```
 
@@ -38,9 +41,9 @@ Additional MySQL access:
 
 ## What's Included?
 
-* [Ubuntu 16.04](http://www.ubuntu.com/)
+* [Ubuntu 18.04](http://www.ubuntu.com/)
 * [nginx (mainline)](http://nginx.org/)
-* [php-fpm 7.1.x](http://php-fpm.org/)
+* [php-fpm 7.4.x](http://php-fpm.org/)
 * [MariaDB 10.1.x](https://mariadb.org/)
 * [phpMyAdmin](https://www.phpmyadmin.net/)
 * [Git](https://git-scm.com/)
