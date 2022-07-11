@@ -44,10 +44,10 @@ echo "Updating packages list..."
 apt-get update
 
 
-echo "Installing php 7.4..."
+echo "Installing php 8.1..."
 add-apt-repository ppa:ondrej/php
 apt-get update
-apt-get install php7.4 -y
+apt-get install php8.1 -y
 
 echo "Installing required packages..."
 apt-get install -y \
@@ -61,22 +61,22 @@ apt-get install -y \
     nginx \
     nodejs \
     ntp \
-    php7.4-bcmath \
-    php7.4-cli \
-    php7.4-common \
-    php7.4-curl \
-    php7.4-fpm \
-    php7.4-dev \
-    php7.4-gd \
-    php7.4-imap \
-    php7.4-intl \
-    php7.4-mbstring \
-    php7.4-mcrypt \
-    php7.4-mysql \
-    php7.4-soap \
-    php7.4-xml \
-    php7.4-xmlrpc \
-    php7.4-zip \
+    php8.1-bcmath \
+    php8.1-cli \
+    php8.1-common \
+    php8.1-curl \
+    php8.1-fpm \
+    php8.1-dev \
+    php8.1-gd \
+    php8.1-imap \
+    php8.1-intl \
+    php8.1-mbstring \
+    php8.1-mcrypt \
+    php8.1-mysql \
+    php8.1-soap \
+    php8.1-xml \
+    php8.1-xmlrpc \
+    php8.1-zip \
     php-gettext \
     php-imagick \
     php-pear \
@@ -123,8 +123,8 @@ apt-get -y autoremove
 echo "Configuring PHP..."
 phpenmod mcrypt
 phpenmod mbstring
-cp /srv/config/php/php-custom.ini /etc/php/7.4/fpm/conf.d/php-custom.ini
-sed -i "s/VAGRANT_DOMAIN/$vagrant_domain/g" /etc/php/7.4/fpm/conf.d/php-custom.ini
+cp /srv/config/php/php-custom.ini /etc/php/8.1/fpm/conf.d/php-custom.ini
+sed -i "s/VAGRANT_DOMAIN/$vagrant_domain/g" /etc/php/8.1/fpm/conf.d/php-custom.ini
 
 # Redis Setup
 echo "Configuring Redis..."

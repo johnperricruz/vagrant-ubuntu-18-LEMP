@@ -19,7 +19,7 @@ echo "Restarting services..."
 sudo fuser -k 80/tcp
 sudo fuser -k 443/tcp
 sudo service mysql restart
-sudo service php7.4-fpm restart
+sudo service php8.1-fpm restart
 #sudo systemctl unmask nginx.service
 sudo service nginx restart
 sudo service mailhog start
