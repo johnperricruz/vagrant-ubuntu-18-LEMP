@@ -32,10 +32,10 @@ sudo cp /srv/config/nginx/nginx.conf /etc/nginx/nginx.conf
 sudo cp /srv/config/nginx/default.conf /etc/nginx/conf.d/default.conf
 sudo cp /srv/config/nginx/mail.conf /etc/nginx/conf.d/mail.conf
 sudo cp /srv/config/nginx/db.conf /etc/nginx/conf.d/db.conf
-sudo sed -i "s/VAGRANT_DOMAIN/$ENV_NAME/g" /etc/nginx/conf.d/default.conf
-sudo sed -i "s/VAGRANT_DOMAIN/$ENV_NAME/g" /etc/nginx/conf.d/mail.conf
-sudo sed -i "s/VAGRANT_DOMAIN/$ENV_NAME/g" /etc/nginx/conf.d/db.conf
 
+sudo sed -i "s/VAGRANT_DOMAIN/"${1}"/g" /etc/nginx/conf.d/default.conf
+sudo sed -i "s/VAGRANT_DOMAIN/"${1}"/g" /etc/nginx/conf.d/mail.conf
+sudo sed -i "s/VAGRANT_DOMAIN/"${1}"/g" /etc/nginx/conf.d/db.conf
 
 #------------------------------------------------------------------------------------------------------------------#
 
@@ -89,9 +89,6 @@ sudo cp /srv/config/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticse
 sudo -i service elasticsearch stop
 sudo -i service elasticsearch start
 
-sudo /bin/systemctl daemon-reload
-sudo /bin/systemctl enable elasticsearch.service
-
 
 #------------------------------------------------------------------------------------------------------------------#
 
@@ -111,23 +108,43 @@ sudo chown vagrant.vagrant ~/.composer
 #------------------------------------------------------------------------------------------------------------------#
 
 
-# Install mailhog
+# Install Mailhog + mhsendmail
+
 if [ ! -f /usr/local/bin/mailhog ]; then
-    echo "Installing mailhog..."
+    echo "Installing Mailhog..."
     wget --quiet -O ~/mailhog https://github.com/mailhog/MailHog/releases/download/v0.2.1/MailHog_linux_amd64
-    chmod +x ~/mailhog
-    mv ~/mailhog /usr/local/bin/mailhog
-    sudo service mailhog start
+    sudo chmod +x ~/mailhog
+    sudo mv ~/mailhog /usr/local/bin/mailhog
+fi
+
+# Install mhsendmail
+if [ ! -f /usr/local/bin/mhsendmail ]; then
+    echo "Installing mhsendmail..."
+    wget --quiet -O ~/mhsendmail https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64
+    sudo chmod +x ~/mhsendmail
+    sudo mv ~/mhsendmail /usr/local/bin/mhsendmail
+fi
+
+# Mailhog initial setup
+if [ ! -f /etc/systemd/system/mailhog.service ]; then
+    echo "Configuring Mailhog..."
+    sudo cp /srv/config/mailhog/mailhog.service  /etc/systemd/system/mailhog.service
+    sudo systemctl enable mailhog
 fi
 
 
 #------------------------------------------------------------------------------------------------------------------#
 
 
-# Install mhsendmail
-if [ ! -f /usr/local/bin/mhsendmail ]; then
-    echo "Installing mhsendmail..."
-    wget --quiet -O ~/mhsendmail https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64
-    chmod +x ~/mhsendmail
-    mv ~/mhsendmail /usr/local/bin/mhsendmail
-fi
+# POST SCRIPTS
+sudo /bin/systemctl daemon-reload
+sudo /bin/systemctl enable elasticsearch.service
+
+sudo service nginx restart
+sudo service mailhog start
+
+echo "COMPLETED...............................100%"
+
+
+#------------------------------------------------------------------------------------------------------------------#
+
