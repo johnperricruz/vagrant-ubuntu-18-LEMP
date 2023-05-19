@@ -65,7 +65,7 @@ sudo add-apt-repository ppa:ondrej/php
 sudo apt install php8.1 -y
 
 echo "Installing PHP8.1 modules"
-sudo apt install php8.1-{bcmath,ctype,dom,gd,zip,iconv,intl,mbstring,pdo-mysql,simplexml,soap,xsl,zip,fpm} -y
+sudo apt install php8.1-{bcmath,ctype,dom,gd,zip,iconv,intl,mbstring,pdo-mysql,simplexml,soap,xsl,zip,fpm,curl} -y
 
 
 #------------------------------------------------------------------------------------------------------------------#
