@@ -106,3 +106,28 @@ mv composer.phar /usr/local/bin/composer
 sudo composer self-update --1
 sudo mkdir ~/.composer
 sudo chown vagrant.vagrant ~/.composer
+
+
+#------------------------------------------------------------------------------------------------------------------#
+
+
+# Install mailhog
+if [ ! -f /usr/local/bin/mailhog ]; then
+    echo "Installing mailhog..."
+    wget --quiet -O ~/mailhog https://github.com/mailhog/MailHog/releases/download/v0.2.1/MailHog_linux_amd64
+    chmod +x ~/mailhog
+    mv ~/mailhog /usr/local/bin/mailhog
+    sudo service mailhog start
+fi
+
+
+#------------------------------------------------------------------------------------------------------------------#
+
+
+# Install mhsendmail
+if [ ! -f /usr/local/bin/mhsendmail ]; then
+    echo "Installing mhsendmail..."
+    wget --quiet -O ~/mhsendmail https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64
+    chmod +x ~/mhsendmail
+    mv ~/mhsendmail /usr/local/bin/mhsendmail
+fi
