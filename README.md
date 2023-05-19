@@ -16,9 +16,10 @@ $ vagrant plugin install vagrant-hostsupdater
 ```
 $ mkdir <project-name>
 $ cd <project-name>
-$ git clone https://github.com/johnperricruz/vagrant-ubuntu-16-LEMP.git
+$ git clone https://github.com/johnperricruz/vagrant-ubuntu-18-LEMP.git
 $ cd vagrant
 $ vagrant up
+$ vagrant ssh
 ```
 
 All Vagrant commands like `vagrant halt`, `vagrant destroy` and `vagrant suspend` are applicable.
@@ -38,17 +39,13 @@ Additional MySQL access:
 
 ## What's Included?
 
-* [Ubuntu 16.04](http://www.ubuntu.com/)
+* [Ubuntu 18.04](http://www.ubuntu.com/)
 * [nginx (mainline)](http://nginx.org/)
-* [php-fpm 7.1.x](http://php-fpm.org/)
-* [MariaDB 10.1.x](https://mariadb.org/)
-* [phpMyAdmin](https://www.phpmyadmin.net/)
+* [MySQL (stable)](http://mysql.com/)
+* [php-fpm 8.1.x](http://php-fpm.org/)
 * [Git](https://git-scm.com/)
-* [Subversion](https://subversion.apache.org/)
 * [Composer](https://getcomposer.org/)
-* [Node.js](https://nodejs.org/)
-* [Redis](https://redis.io/)
-* [WP-CLI](http://wp-cli.org/)
+* [Elastic Search](https://www.elastic.co/)
 * [MailHog](https://github.com/mailhog/MailHog)
 
 ## Directory Structure
